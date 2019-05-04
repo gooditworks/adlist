@@ -10,7 +10,8 @@ async function getScreenshot(url, type, quality, fullPage) {
 
     const page = await browser.newPage();
     await page.goto(url);
-    const file = await page.screenshot({ type,  quality, fullPage });
+    const firstFrame = await page.$('iframe[name*="google_ads"]')
+    const file = firstFrame ? await firstFrame.screenshot({ type, quality, fullPage }) : false;
     await browser.close();
     return file;
 }
